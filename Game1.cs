@@ -33,16 +33,22 @@ public class Game1 : Game
         // TODO: Add your initialization logic here
 
         base.Initialize();
+
+        //initialize lvl1
+        Level1 level1 = new Level1();
+        entities = level1.createlevel(Content);
+
         player = new Player(Content, new Vector2(180,0));
-        platf1 = new Platform(Content, new Vector2(100, 300));
-        Entity platf2 = new Platform(Content, new Vector2(450, 300));
-        Enemy enemy1 = new Enemy(Content, new Vector2(450, 0));
+        //platf1 = new Platform(Content, new Vector2(100, 300));
+        //Entity platf2 = new Platform(Content, new Vector2(450, 300));
+        //Enemy enemy1 = new Enemy(Content, new Vector2(450, 0));
         camera = new Camera();
 
-        entities.Add(platf2);
+        //entities.Add(platf2);
         entities.Add(player);
-        entities.Add(platf1);
-        entities.Add(enemy1);
+        //entities.Add(platf1);
+        //entities.Add(enemy1);
+
     }
 
     protected override void LoadContent()
