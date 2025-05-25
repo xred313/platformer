@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Platformer
@@ -14,6 +15,9 @@ namespace Platformer
         private float speed = 100f;
         private float gravity = 10;
         private float velocityY = 0;
+        private float shootCooldown = 1.5f; // time between shots
+        private float shootTimer = 0f;
+
         public Enemy(ContentManager cm, Vector2 startPos) : base(cm, "enemy1", startPos, EntityType.Enemy)
         {
         }
@@ -40,7 +44,22 @@ namespace Platformer
         public override void Update(GameTime gameTime, List<Entity> entities)
         {
 
-            
+
+        {
+            shootTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (shootTimer <= 0)
+            {
+                shootTimer = shootCooldown;
+                int xOffset = flip ? 0 : entityTexture.Width;
+                Bullet bullet = new Bullet(contentManager, new Vector2(pos.X + xOffset, pos.Y + entityTexture.Height / 2));
+                bullet.Team = this.Team; // Bullet belongs to shooter's team
+                entities.Add(bullet);
+                bullet.SetFlip(flip);
+            }
+
+            // other enemy update logic
+        }
 
             //check collision
             //foreach (var entity in entities)
@@ -57,9 +76,18 @@ namespace Platformer
                     //die if colliding bullet
                     if ( entity.GetType() == EntityType.Bullet )
                     {
+                        Bullet bullet = (Bullet)entity;
+                        if (bullet.Team == this.Team)
+                        {
+                            continue;
+                        }
+                        if (true);
+                        {
+                         
+                        }
                         entities.Remove(this);
                     }
-
+                    
                     // if touching platform then stop moving down"gravity"
                     if (entity.GetType()== EntityType.Platform)
                     {
@@ -80,7 +108,6 @@ namespace Platformer
                         }
                     }
 
-
                         //break;
                 }
             }
@@ -100,8 +127,6 @@ namespace Platformer
             pos.Y += velocityY;
 
             pos.X += stepSpeed;
-            
-
         }
     }
 }

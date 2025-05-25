@@ -24,6 +24,8 @@ public class Entity
     protected Vector2 pos;
     protected bool flip;
     protected ContentManager contentManager;
+    public int Team { get; set; }
+
 
 
     public Entity(ContentManager cm, String texture, Vector2 startPos, EntityType entityType = EntityType.Unknown)

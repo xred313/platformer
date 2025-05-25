@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 
@@ -12,8 +14,10 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    
 
+    HUD hud;
+    SpriteFont font1;
+    Vector2 fontPos;
 
     Entity player;
     Platform platf1 = null;
@@ -42,7 +46,10 @@ public class Game1 : Game
         //platf1 = new Platform(Content, new Vector2(100, 300));
         //Entity platf2 = new Platform(Content, new Vector2(450, 300));
         //Enemy enemy1 = new Enemy(Content, new Vector2(450, 0));
+        hud = new HUD(Content);
         camera = new Camera();
+
+    
 
         //entities.Add(platf2);
         entities.Add(player);
@@ -51,11 +58,18 @@ public class Game1 : Game
 
     }
 
+
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        Viewport viewport = _graphics.GraphicsDevice.Viewport;
+        font1 = Content.Load<SpriteFont>("GameFont");
 
         // TODO: use this.Content to load your game content here
+        fontPos = new Vector2(viewport.Width / 2, viewport.Height / 2);
+        {
+
+        }
     }
 
     protected override void Update(GameTime gameTime)
@@ -108,6 +122,9 @@ public class Game1 : Game
             entity.Draw(_spriteBatch, camera);
         }
 
+        //Draw HUD
+
+        hud.Draw(_spriteBatch);
         base.Draw(gameTime);
     }
 }

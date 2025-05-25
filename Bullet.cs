@@ -12,6 +12,7 @@ namespace Platformer
     {
         private float speed = 400f;
         private float timeToLive = 0.8f;
+        public Entity Owner;
 
         public Bullet(ContentManager cm, Vector2 startPos) : base(cm, "Bullet1", startPos, EntityType.Bullet)
         {
@@ -28,6 +29,7 @@ namespace Platformer
             if (timeToLive < 0)
             {
                 entities.Remove(this);
+                
             }
         }
 

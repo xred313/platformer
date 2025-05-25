@@ -7,10 +7,12 @@
     <File>C:/Users/JakobAndrason/source/repos/Platformer/Content/ball.png</File>
     <File>C:/Users/JakobAndrason/source/repos/Platformer/Content/Bullet1.png</File>
     <File>C:/Users/JakobAndrason/source/repos/Platformer/Content/enemy1.png</File>
+    <File>C:/Users/JakobAndrason/source/repos/Platformer/Content/GameFont.spritefont</File>
     <File>C:/Users/JakobAndrason/source/repos/Platformer/Content/grass.png</File>
     <File>C:/Users/JakobAndrason/source/repos/Platformer/Content/Hero1.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
