@@ -20,6 +20,7 @@ namespace Platformer
 
         public Enemy(ContentManager cm, Vector2 startPos) : base(cm, "enemy1", startPos, EntityType.Enemy)
         {
+            this.Team = TeamType.Enemy; 
         }
 
         private bool IsCollision(Entity ent)
@@ -77,15 +78,12 @@ namespace Platformer
                     if ( entity.GetType() == EntityType.Bullet )
                     {
                         Bullet bullet = (Bullet)entity;
-                        if (bullet.Team == this.Team)
+                        if (bullet.Team != this.Team)
                         {
-                            continue;
+                            entities.Remove(this); // Enemy dies
+                            GameState.score += 1;
                         }
-                        if (true);
-                        {
-                         
-                        }
-                        entities.Remove(this);
+
                     }
                     
                     // if touching platform then stop moving down"gravity"

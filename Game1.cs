@@ -15,6 +15,9 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
+    public int Score = 0;
+
+
     HUD hud;
     SpriteFont font1;
     Vector2 fontPos;
@@ -43,19 +46,10 @@ public class Game1 : Game
         entities = level1.createlevel(Content);
 
         player = new Player(Content, new Vector2(180,0));
-        //platf1 = new Platform(Content, new Vector2(100, 300));
-        //Entity platf2 = new Platform(Content, new Vector2(450, 300));
-        //Enemy enemy1 = new Enemy(Content, new Vector2(450, 0));
+        entities.Add(player);
+
         hud = new HUD(Content);
         camera = new Camera();
-
-    
-
-        //entities.Add(platf2);
-        entities.Add(player);
-        //entities.Add(platf1);
-        //entities.Add(enemy1);
-
     }
 
 
@@ -77,10 +71,24 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-       /* foreach (Entity entity in entities)
+        //Start game when player hits any button
+        if (Keyboard.GetState().GetPressedKeyCount() > 0)
         {
-            entity.Update(gameTime, entities);       
-        }*/
+            GameState.isGameRunning = true;
+        }
+
+        if (GameState.isGameRunning == false)
+        {
+            return;
+        }
+
+        //pause game if player presses P
+        if (Keyboard.GetState().IsKeyDown(Keys.P))
+        {
+            GameState.isGameRunning = false;
+        }
+            
+
 
         for (int i = 0; i < entities.Count; i++)
         {
@@ -99,12 +107,9 @@ public class Game1 : Game
         {
             offsetX = (int)((int)playerPosSize.X - (int)camPos.X - GraphicsDevice.Viewport.Width * 0.2);
         }
-
+        
         camera.SetCameraPos(new Vector2(camPos.X + offsetX, camPos.Y));
 
-
-
-        // TODO: Add your update logic here
 
 
         base.Update(gameTime);
@@ -114,16 +119,12 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
-        // TODO: Add your drawing code here
-
         foreach (Entity entity in entities)
         {
             entity.Draw(_spriteBatch, camera);
         }
 
         //Draw HUD
-
         hud.Draw(_spriteBatch);
         base.Draw(gameTime);
     }

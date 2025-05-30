@@ -19,6 +19,7 @@ namespace Platformer
         private float fireRate = 0f;
         public Player(ContentManager cm, Vector2 startPos) : base(cm, "Hero1", startPos, EntityType.Player)
         {
+            this.Team = TeamType.Hero;
         }
 
         private bool IsCollision(Entity ent)

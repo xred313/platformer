@@ -18,16 +18,22 @@ public class Entity
         Unknown
     }
 
+    public enum TeamType
+    {
+        Hero,
+        Enemy
+    }
+
     protected EntityType entityType;
     protected bool _aabb = false;
     protected Texture2D entityTexture;
     protected Vector2 pos;
     protected bool flip;
     protected ContentManager contentManager;
-    public int Team { get; set; }
+    public TeamType Team { get; set; }
 
 
-
+    //Texturen för entiteten
     public Entity(ContentManager cm, String texture, Vector2 startPos, EntityType entityType = EntityType.Unknown)
     {
         entityTexture = cm.Load<Texture2D>(texture);

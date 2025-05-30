@@ -33,7 +33,13 @@ namespace Platformer
         }
         public void Draw(SpriteBatch sb)
         {
-            DrawText(sb, "press to start", new Vector2(550, 200), 2.0f);
+            string scoreText = "score: " + GameState.score;
+            DrawText(sb, scoreText, new Vector2(100, 30), 0.9f);
+
+            if (GameState.isGameRunning == false)
+            {
+                DrawText(sb, "press to start", new Vector2(550, 200), 2.0f);
+            }
         }
     }
 
