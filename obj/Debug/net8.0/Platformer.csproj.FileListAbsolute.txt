@@ -30,3 +30,4 @@ C:\Users\JakobAndrason\source\repos\Platformer\bin\Debug\net8.0\Content\enemy1.x
 C:\Users\JakobAndrason\source\repos\Platformer\bin\Debug\net8.0\Content\Bullet1.xnb
 C:\Users\JakobAndrason\source\repos\Platformer\obj\Debug\net8.0\Platformer.sourcelink.json
 C:\Users\JakobAndrason\source\repos\Platformer\bin\Debug\net8.0\Content\GameFont.xnb
+C:\Users\JakobAndrason\source\repos\Platformer\bin\Debug\net8.0\Content\CloudSmall.xnb

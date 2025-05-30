@@ -88,7 +88,7 @@ namespace Platformer
                 {
                     continue;
                 }
-                if (IsCollision(entity) == true)
+                if (IsCollision(entity) == true && entity.GetType() == EntityType.Platform)
                 {
                     //boundingBox collision box
                     //_aabb = true;

@@ -15,6 +15,7 @@ public class Entity
         Enemy,
         Bullet,
         Platform,
+        Cloud,
         Unknown
     }
 
@@ -58,13 +59,13 @@ public class Entity
         return entityType;
     }
 
-    public void Draw(SpriteBatch sb, Camera camera)
+    public virtual void Draw(SpriteBatch sb, Camera camera = null)
     {
         Texture2D _texture;
         _texture = new Texture2D(sb.GraphicsDevice, 1, 1);
         _texture.SetData(new Color[] { Color.Red });
 
-        sb.Begin();
+        //sb.Begin();
         //sb.Draw(entityTexture, pos, Color.White);
 
         SpriteEffects doFlip = SpriteEffects.None;
@@ -83,7 +84,7 @@ public class Entity
                 0f,
                 new Vector2(0, 0),
                 doFlip,
-                1);
+                0.5f);
 
         if (_aabb == true)
         {
@@ -91,7 +92,7 @@ public class Entity
             sb.Draw(_texture, new Rectangle((int)pos.X, (int)pos.Y, entityTexture.Width, entityTexture.Height), Color.White);
         }
 
-        sb.End();
+        //sb.End();
 
     }
 }

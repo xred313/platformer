@@ -25,11 +25,11 @@ namespace Platformer
             //Draw HUD
 
             Vector2 FontOrigin = font.MeasureString(text);
-            sb.Begin();
+            //sb.Begin();
             sb.DrawString(font, text, pos, Color.BlueViolet, 0,
-                                        FontOrigin, scale, SpriteEffects.None, 0.5f);
+                                        FontOrigin, scale, SpriteEffects.None, 1f);
 
-            sb.End();
+            //sb.End();
         }
         public void Draw(SpriteBatch sb)
         {

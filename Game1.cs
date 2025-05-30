@@ -7,9 +7,10 @@ using System.Collections.Generic;
 using System.Net.Mime;
 
 namespace Platformer;
-/// <summary>
-/// dotnet mgcb-editor 
-/// </summary>
+/* Command to open the content manager:
+   dotnet mgcb-editor
+*/
+
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
@@ -19,11 +20,10 @@ public class Game1 : Game
 
 
     HUD hud;
-    SpriteFont font1;
-    Vector2 fontPos;
 
     Entity player;
-    Platform platf1 = null;
+
+    Sky sky;
 
     private List<Entity> entities = new List<Entity>();
     private Camera camera;
@@ -48,6 +48,7 @@ public class Game1 : Game
         player = new Player(Content, new Vector2(180,0));
         entities.Add(player);
 
+        
         hud = new HUD(Content);
         camera = new Camera();
     }
@@ -57,13 +58,9 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         Viewport viewport = _graphics.GraphicsDevice.Viewport;
-        font1 = Content.Load<SpriteFont>("GameFont");
 
-        // TODO: use this.Content to load your game content here
-        fontPos = new Vector2(viewport.Width / 2, viewport.Height / 2);
-        {
-
-        }
+        sky = new Sky(Content);
+        sky.SetCloudCover();
     }
 
     protected override void Update(GameTime gameTime)
@@ -119,13 +116,21 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+
         foreach (Entity entity in entities)
         {
             entity.Draw(_spriteBatch, camera);
         }
+        
+        //Draw sky
+        sky.Draw(_spriteBatch, camera);
 
         //Draw HUD
         hud.Draw(_spriteBatch);
+
+
         base.Draw(gameTime);
+        _spriteBatch.End();
     }
 }
