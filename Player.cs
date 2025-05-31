@@ -44,9 +44,18 @@ namespace Platformer
 
         public override void Update(GameTime gameTime, List<Entity> entities)
         {
+            if (GameState.isAlive == false)
+            {
+                return;
+            }
 
             float stepSpeed = speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             pos.Y += velocityY;
+
+            if (pos.Y > 700)
+            {
+                GameState.isAlive = false;
+            }
 
             var kstate = Keyboard.GetState();
 

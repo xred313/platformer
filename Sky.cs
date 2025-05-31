@@ -51,7 +51,7 @@ namespace Platformer
             
             catch (Exception error)
             {
-                return 1; // on error use just one cloud
+                return 10; // on error use just one cloud
             }
         }
 

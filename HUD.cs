@@ -40,6 +40,13 @@ namespace Platformer
             {
                 DrawText(sb, "press to start", new Vector2(550, 200), 2.0f);
             }
+
+            if (GameState.isAlive == false)
+            {
+
+                DrawText(sb, "Game over", new Vector2(550, 250), 3.0f);
+
+            }
         }
     }
 
