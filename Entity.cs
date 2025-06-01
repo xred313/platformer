@@ -32,6 +32,8 @@ public class Entity
     protected bool flip;
     protected ContentManager contentManager;
     public TeamType Team { get; set; }
+    protected float layerDepth = 0.5f;
+    protected float alphaBlend = 1.0f;
 
 
     //Texturen för entiteten
@@ -80,11 +82,11 @@ public class Entity
         sb.Draw(entityTexture,
                 new Rectangle((int)pos.X - (int)cameraPos.X, (int)pos.Y - (int)cameraPos.Y , entityTexture.Width, entityTexture.Height),
                 null,
-                Color.White,
+                Color.White * alphaBlend,
                 0f,
                 new Vector2(0, 0),
                 doFlip,
-                0.5f);
+                layerDepth);
 
         if (_aabb == true)
         {

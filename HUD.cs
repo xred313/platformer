@@ -34,7 +34,7 @@ namespace Platformer
         public void Draw(SpriteBatch sb)
         {
             string scoreText = "score: " + GameState.score;
-            DrawText(sb, scoreText, new Vector2(100, 30), 0.9f);
+            DrawText(sb, scoreText, new Vector2(150, 60), 1.4f);
 
             if (GameState.isGameRunning == false)
             {

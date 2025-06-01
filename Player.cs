@@ -16,14 +16,17 @@ namespace Platformer
         private float speed = 200f;
         private float gravity = 5;
         private float velocityY = 0;
-        private float fireRate = 0f;
+        private float fireRate = 1f;
         public Player(ContentManager cm, Vector2 startPos) : base(cm, "Hero1", startPos, EntityType.Player)
         {
             this.Team = TeamType.Hero;
+            this.layerDepth = 0.9f;
         }
 
         private bool IsCollision(Entity ent)
         {
+            if (GameState.isAlive == false) return false;
+            
             Vector4 selfPos = getPosSize();
             Vector4 entPos = ent.getPosSize();
 
@@ -41,13 +44,16 @@ namespace Platformer
         }
 
 
-
-        public override void Update(GameTime gameTime, List<Entity> entities)
+        // layerdepth and check if player is alive.
+        public override void Update(GameTime gameTime, List<Entity> entities) 
         {
-            if (GameState.isAlive == false)
+
+            if ( GameState.isAlive == false)
             {
-                return;
+                this.alphaBlend = 0.3f;
             }
+
+
 
             float stepSpeed = speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             pos.Y += velocityY;
@@ -57,8 +63,14 @@ namespace Platformer
                 GameState.isAlive = false;
             }
 
-            var kstate = Keyboard.GetState();
+            if (GameState.isAlive == false)
+            {
+                return;
+            }
 
+            //keyboard controls
+
+            var kstate = Keyboard.GetState();
 
             if (kstate.IsKeyDown(Keys.Left) || kstate.IsKeyDown(Keys.A))
             {
@@ -84,12 +96,16 @@ namespace Platformer
                 }
                 fireRate = 0.2f;
                 Bullet bullet1 = new Bullet(contentManager, new Vector2(pos.X + xOffset, pos.Y + entityTexture.Height / 2));
+                bullet1.Team = this.Team; // Bullet belongs to shooter's team
                 bullet1.SetFlip(flip);
                 entities.Add(bullet1);
 
+
             }
             fireRate -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+            
+            bool isOnGround = false;
+            
             //check collision
             foreach (var entity in entities)
             {
@@ -97,6 +113,19 @@ namespace Platformer
                 {
                     continue;
                 }
+
+                if (IsCollision(entity) == true && entity.GetType() == EntityType.Bullet)
+                { 
+                    if (
+                        ((Bullet)entity).Team != this.Team)
+                    {
+                        GameState.isAlive = false;
+                        velocityY = -2;
+                        break;
+                    }
+                    
+                }
+
                 if (IsCollision(entity) == true && entity.GetType() == EntityType.Platform)
                 {
                     //boundingBox collision box
@@ -108,7 +137,7 @@ namespace Platformer
                     {
                         velocityY = -10;
                     }
-                    break;
+                    isOnGround = true;
                 }
                 else
                 {
@@ -117,12 +146,10 @@ namespace Platformer
                 }
             }
 
-            velocityY += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-
-            
-            //speed += speed;
-
+            if ( isOnGround == false)
+            {
+                velocityY += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
         }
     }
 }
