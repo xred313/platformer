@@ -16,7 +16,7 @@ namespace Platformer
         private float speed = 200f;
         private float gravity = 5;
         private float velocityY = 0;
-        private float fireRate = 1f;
+        private float fireRate = 0f;
         public Player(ContentManager cm, Vector2 startPos) : base(cm, "Hero1", startPos, EntityType.Player)
         {
             this.Team = TeamType.Hero;

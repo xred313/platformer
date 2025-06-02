@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,15 +13,20 @@ namespace Platformer
 {
     class Enemy : Entity
     {
+        private const float cloneTime = 6.0f;
+        private const float shootCooldown = 1.5f; // time between shots
+
         private float speed = 100f;
         private float gravity = 10;
         private float velocityY = 0;
-        private float shootCooldown = 1.5f; // time between shots
-        private float shootTimer = 0f;
+        private float timeToClone = cloneTime; // respawns if not dead
+        private float shootTimer = shootCooldown;
+        private ContentManager cm;
 
         public Enemy(ContentManager cm, Vector2 startPos) : base(cm, "enemy1", startPos, EntityType.Enemy)
         {
             this.Team = TeamType.Enemy; 
+            this.cm = cm;
         }
 
         private bool IsCollision(Entity ent)
@@ -46,8 +52,10 @@ namespace Platformer
         {
 
 
-        {
+        
             shootTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            timeToClone -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
 
             if (shootTimer <= 0)
             {
@@ -59,8 +67,14 @@ namespace Platformer
                 bullet.SetFlip(flip);
             }
 
-            // other enemy update logic
-        }
+            //Create new enemy if not dead within Clone Time
+            if (timeToClone <= 0 && entities.Count < 30) {
+                timeToClone = cloneTime;
+                Enemy clone = new Enemy(cm, this.pos);
+                clone.flip = !this.flip;
+                entities.Add(clone);
+                }
+        
 
             //check collision
             //foreach (var entity in entities)
@@ -105,8 +119,6 @@ namespace Platformer
                             speed *= -1;
                         }
                     }
-
-                        //break;
                 }
             }
 
@@ -119,7 +131,7 @@ namespace Platformer
                 flip = false;
             }
 
-                float stepSpeed = speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float stepSpeed = speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             velocityY += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             pos.Y += velocityY;
